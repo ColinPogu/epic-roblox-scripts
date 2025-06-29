@@ -17,6 +17,23 @@ end
 
 local rootPart = getRootPart()
 
+local function holdingTool()
+    local character = player.Character
+    if character then
+        if character:FindFirstChildOfClass("Tool") then
+            return true
+        end
+    end
+    return false
+end
+
+local function waitForToolRelease(timeout)
+    local start = tick()
+    while holdingTool() and tick() - start < (timeout or 5) do
+        RunService.Stepped:Wait()
+    end
+end
+
 -- Coordinates split into 8 sectors
 local allCoords = {
     Sector1 = {
@@ -179,12 +196,13 @@ for sectorName, coordList in pairs(allCoords) do
                 if not isRunning then break end
                 rootPart = getRootPart()
                 rootPart.CFrame = CFrame.new(pos + Vector3.new(0, 4, 0))
-                task.wait(0.3)
+                task.wait(0.5)
                 stealNearby(20)
+                waitForToolRelease(5)
                 if returnPosition then
                     rootPart.CFrame = CFrame.new(returnPosition + Vector3.new(0, 4, 0))
                 end
-                task.wait(0.2)
+                task.wait(0.3)
             end
             isRunning = false
             activeSector = nil
