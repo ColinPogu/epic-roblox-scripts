@@ -207,15 +207,17 @@ for sectorName, coordList in pairs(allCoords) do
         coroutine.wrap(function()
             for _, pos in ipairs(coordList) do
                 if not isRunning then break end
-                waitForWalkSpeed(19)
+                waitForWalkSpeed(28)
                 rootPart = getRootPart()
                 rootPart.CFrame = CFrame.new(pos + Vector3.new(0, 4, 0))
                 task.wait(0.5)
                 stealNearby(20)
-                waitForToolRelease(5)
+                waitForWalkSpeed(19)
+                rootPart = getRootPart()
                 if returnPosition then
                     rootPart.CFrame = CFrame.new(returnPosition + Vector3.new(0, 4, 0))
                 end
+                waitForToolRelease(5)
                 task.wait(0.3)
             end
             isRunning = false
