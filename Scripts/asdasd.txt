@@ -1,0 +1,98 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+
+local strawberryPos = Vector3.new(44.3, 4.0, -87.7)
+local shopPos = Vector3.new(86.6, 3.0, 0.4)
+
+local loopRunning = false
+
+-- GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "AutoFarmGui"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 200, 0, 40)
+button.Position = UDim2.new(1, -210, 0.5, 0)
+button.Text = "Game (OFF)"
+button.BackgroundColor3 = Color3.fromRGB(200, 255, 200)
+button.TextScaled = true
+button.Parent = screenGui
+
+-- Helper: teleport player
+local function teleportTo(position)
+	local character = player.Character
+	if character and character:FindFirstChild("HumanoidRootPart") then
+		character:MoveTo(position)
+	end
+end
+
+-- Helper: trigger all nearby proximity prompts
+local function triggerNearbyPrompts(radius)
+	local character = player.Character
+	if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+	local hrp = character.HumanoidRootPart
+
+	for _, obj in ipairs(workspace:GetDescendants()) do
+		if obj:IsA("ProximityPrompt") and obj.Enabled then
+			local part = obj.Parent:IsA("Model") and obj.Parent:FindFirstChildWhichIsA("BasePart") or obj.Parent
+			if part and (part.Position - hrp.Position).Magnitude <= radius then
+				fireproximityprompt(obj)
+				wait(0.2)
+			end
+		end
+	end
+end
+
+-- Helper: click the shop "Sell Inventory" button
+local function clickSellInventory()
+	local gui = player:FindFirstChild("PlayerGui")
+	if not gui then return end
+
+	local billboard = gui:FindFirstChild("Billboard_UI")
+	if not billboard then return end
+
+	local optionUI = billboard:FindFirstChild("Option_UI")
+	if not optionUI then return end
+
+	local frame = optionUI:FindFirstChild("Frame")
+	if not frame then return end
+
+	local imageButton = frame:FindFirstChild("ImageButton")
+	if not imageButton then return end
+
+	for _, conn in ipairs(getconnections(imageButton.MouseButton1Click)) do
+		conn:Fire()
+	end
+end
+
+-- Main loop
+local function runLoop()
+	while loopRunning do
+		-- Go to strawberries
+		teleportTo(strawberryPos)
+		wait(1)
+		triggerNearbyPrompts(20)
+
+		-- Go to shop
+		teleportTo(shopPos)
+		wait(2)
+
+		-- Try clicking sell
+		clickSellInventory()
+		wait(2)
+	end
+end
+
+-- Toggle button
+button.MouseButton1Click:Connect(function()
+	loopRunning = not loopRunning
+	button.Text = loopRunning and "Game (ON)" or "Game (OFF)"
+	button.BackgroundColor3 = loopRunning and Color3.fromRGB(255, 200, 200) or Color3.fromRGB(200, 255, 200)
+
+	if loopRunning then
+		coroutine.wrap(runLoop)()
+	end
+end)
