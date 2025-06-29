@@ -17,6 +17,19 @@ end
 
 local rootPart = getRootPart()
 
+local function getHumanoid()
+    local character = player.Character or player.CharacterAdded:Wait()
+    return character:WaitForChild("Humanoid")
+end
+
+local function waitForWalkSpeed(target)
+    local humanoid = getHumanoid()
+    while humanoid.WalkSpeed ~= target do
+        RunService.Stepped:Wait()
+        humanoid = getHumanoid()
+    end
+end
+
 local function holdingTool()
     local character = player.Character
     if character then
@@ -194,6 +207,7 @@ for sectorName, coordList in pairs(allCoords) do
         coroutine.wrap(function()
             for _, pos in ipairs(coordList) do
                 if not isRunning then break end
+                waitForWalkSpeed(19)
                 rootPart = getRootPart()
                 rootPart.CFrame = CFrame.new(pos + Vector3.new(0, 4, 0))
                 task.wait(0.5)
