@@ -16,6 +16,21 @@ button.TextScaled = true
 button.Font = Enum.Font.SourceSansBold
 button.Parent = gui
 
+local outputBox = Instance.new("TextBox")
+outputBox.Name = "InfoOutput"
+outputBox.Size = UDim2.new(0, 400, 0.4, 0)
+outputBox.Position = UDim2.new(0, 20, 0.2, 0)
+outputBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+outputBox.TextColor3 = Color3.new(1, 1, 1)
+outputBox.Font = Enum.Font.Code
+outputBox.TextSize = 14
+outputBox.TextXAlignment = Enum.TextXAlignment.Left
+outputBox.TextYAlignment = Enum.TextYAlignment.Top
+outputBox.ClearTextOnFocus = false
+outputBox.MultiLine = true
+outputBox.Text = ""
+outputBox.Parent = gui
+
 local lastDump = ""
 
 local function scan(obj, indent, out)
@@ -41,9 +56,8 @@ local function getInfo()
 end
 
 button.MouseButton1Click:Connect(function()
-        local info = getInfo()
-        if info ~= lastDump then
-                lastDump = info
-                print(info)
-        end
+       local info = getInfo()
+       lastDump = info
+       outputBox.Text = info
+       print(info)
 end)
