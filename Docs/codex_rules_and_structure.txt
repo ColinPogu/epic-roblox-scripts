@@ -30,7 +30,7 @@ codex_rules_and_structure.txt – this file
 │   │   ↳ Exposes Enable/Disable functions used by UI toggle buttons.
 │   ├── `AIMovement.lua`
 │   │   ↳ Tween-based step movement toward a destination.
-│   │   ↳ Moves every 0.3s until within 2 studs of the goal.
+│   │   ↳ Default 10-stud steps every 0.3s until within 2 studs of the goal.
 │   ├── `AIMovementUI.lua`
 │   │   ↳ Floating UI to set target and start/stop AIMovement.
 │   │   ↳ Displays brief debug messages while moving.
