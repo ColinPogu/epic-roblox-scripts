@@ -65,6 +65,66 @@ return function()
         loadRemote
     )
 
+    --=== AI Movement Extension ===--
+    local stealBtn = ui.Side:FindFirstChild("StealGames")
+    if stealBtn then
+        local aiButton
+        local targetPos
+        local aiModule = loadRemote("Scripts/General Tools/AIMovement.lua")
+
+        local setTarget = ui.MenusTemplate:Clone()
+        setTarget.Name = "SetTargetLocation"
+        setTarget.Text = "Set Target Location"
+        setTarget.Size = UDim2.new(0, 160, 0, 40)
+        setTarget.Position = UDim2.new(1, -170, 0.3, 0)
+        setTarget.Visible = false
+        setTarget.Parent = ui.ScreenGui or ui.Background.Parent
+
+        local startPath = ui.MenusTemplate:Clone()
+        startPath.Name = "StartAIPath"
+        startPath.Text = "Start AI Path"
+        startPath.Size = UDim2.new(0, 160, 0, 40)
+        startPath.Position = UDim2.new(1, -170, 0.4, 0)
+        startPath.Visible = false
+        startPath.Parent = ui.ScreenGui or ui.Background.Parent
+
+        setTarget.MouseButton1Click:Connect(function()
+            local hrp = Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                targetPos = hrp.Position
+            end
+        end)
+
+        startPath.MouseButton1Click:Connect(function()
+            if startPath.Text:find("Stop") then
+                aiModule.Stop()
+                startPath.Text = "Start AI Path"
+            else
+                if targetPos then
+                    aiModule.Start(targetPos)
+                    startPath.Text = "Stop AI Path"
+                end
+            end
+        end)
+
+        local function toggleFloat()
+            local vis = not setTarget.Visible
+            setTarget.Visible = vis
+            startPath.Visible = vis
+        end
+
+        stealBtn.MouseButton1Click:Connect(function()
+            if not aiButton then
+                aiButton = ui.MenusTemplate:Clone()
+                aiButton.Name = "AIMovement"
+                aiButton.Text = "AI Movement"
+                aiButton.Visible = true
+                aiButton.Parent = ui.Side
+                aiButton.MouseButton1Click:Connect(toggleFloat)
+            end
+        end)
+    end
+
     -- Menu controls
     ui.MenuButton.MouseButton1Click:Connect(function()
         ui.Background.Visible = not ui.Background.Visible
