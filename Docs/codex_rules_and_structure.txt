@@ -68,6 +68,9 @@ codex_rules_and_structure.txt – this file
 │   ├── `sidebar.lua`
 │   │   ↳ Builds the sidebar menu using AddMenuButton.
 │   │   ↳ Connects sidebar buttons to pages.lua page switching.
+│   ├── `default_buttons.lua`
+│   │   ↳ Populates pages with toggleable grid buttons like "Steal a Baddie".
+│   │   ↳ Uses AddToggleGridButton to load modules on demand.
 │   └── `loader.lua`
 │       ↳ Master loader hub for the UI library.
 │       ↳ Dynamically fetches and executes MainUI.lua, pages.lua, and sidebar.lua.
