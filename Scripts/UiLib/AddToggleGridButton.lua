@@ -1,11 +1,13 @@
-local activeButtons = {}
 
-local function cleanupEntry(entry)
-    if entry.enabled then
-        local obj = entry.handle
-        if obj then
-            if typeof(obj) == "Instance" and obj.Destroy then
-                obj:Destroy()
+local function createController()
+    local activeButtons = {}
+
+    local function cleanupEntry(entry)
+        if entry.enabled then
+            local obj = entry.handle
+            if obj then
+                if typeof(obj) == "Instance" and obj.Destroy then
+                    obj:Destroy()
             elseif type(obj) == "table" then
                 if obj.Disable then
                     obj:Disable()
@@ -20,21 +22,22 @@ local function cleanupEntry(entry)
             end
         end
     end
-    entry.enabled = false
-    entry.handle = nil
-end
+        end
+        entry.enabled = false
+        entry.handle = nil
+    end
 
-local ToggleLib = {}
+    local ToggleLib = {}
 
-function ToggleLib.AddButton(gridFrame, templateButton, labelText, moduleLoader)
-    local btn = templateButton:Clone()
-    btn.Name = labelText:gsub("%s+", "")
-    btn.Text = labelText
-    btn.Visible = true
-    btn.Parent = gridFrame
+    function ToggleLib.AddButton(gridFrame, templateButton, labelText, moduleLoader)
+        local btn = templateButton:Clone()
+        btn.Name = labelText:gsub("%s+", "")
+        btn.Text = labelText
+        btn.Visible = true
+        btn.Parent = gridFrame
 
     local entry = {enabled=false, handle=nil, loader=moduleLoader}
-    activeButtons[btn] = entry
+        activeButtons[btn] = entry
 
     local function enable()
         local result
@@ -59,23 +62,26 @@ function ToggleLib.AddButton(gridFrame, templateButton, labelText, moduleLoader)
         cleanupEntry(entry)
     end
 
-    btn.MouseButton1Click:Connect(function()
-        entry.enabled = not entry.enabled
-        if entry.enabled then
-            enable()
-        else
-            disable()
-        end
-    end)
+        btn.MouseButton1Click:Connect(function()
+            entry.enabled = not entry.enabled
+            if entry.enabled then
+                enable()
+            else
+                disable()
+            end
+        end)
 
-    return btn
-end
-
-function ToggleLib.Reset()
-    for _, entry in pairs(activeButtons) do
-        cleanupEntry(entry)
+        return btn
     end
-    activeButtons = {}
+
+    function ToggleLib.Reset()
+        for _, entry in pairs(activeButtons) do
+            cleanupEntry(entry)
+        end
+        activeButtons = {}
+    end
+
+    return ToggleLib
 end
 
-return ToggleLib
+return {CreateController = createController}
