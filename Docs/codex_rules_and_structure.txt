@@ -56,14 +56,17 @@ codex_rules_and_structure.txt – this file
 │   ├── `AddMenuButton.lua`
 │   │   ↳ Utility module for dynamically adding buttons to the Side menu.
 │   │   ↳ Handles template cloning, text assignment, callback binding.
-│   │   ↳ Used by loader.lua to insert dynamic pages like “Research Menu”.
+│   │   ↳ Used by sidebar.lua to create navigation buttons.
 │   ├── `AddToggleGridButton.lua`
 │   │   ↳ Returns CreateController() to build isolated toggle controllers.
 │   │   ↳ Each controller manages its own buttons and Reset logic.
-
+│   ├── `pages.lua`
+│   │   ↳ Creates and manages page containers within the UI.
+│   │   ↳ Provides showPage and createPage utilities.
+│   ├── `sidebar.lua`
+│   │   ↳ Builds the sidebar menu using AddMenuButton.
+│   │   ↳ Connects sidebar buttons to pages.lua page switching.
 │   └── `loader.lua`
-│       ↳ Returns a function creating a ScreenGui with a MainFrame and sidebar.
-│       ↳ Sidebar buttons open Research, General, or Steal Games pages.
-│       ↳ Each page spawns a grid of placeholder buttons for testing.
-│       ↳ Debug prints trace setup and page switching for executors.
-│       ↳ Designed for use with loadstring(...)() in live game sessions.
+│       ↳ Master loader hub for the UI library.
+│       ↳ Dynamically fetches and executes MainUI.lua, pages.lua, and sidebar.lua.
+│       ↳ Prints progress for debugging while doing minimal environment setup.
