@@ -18,18 +18,20 @@ CODEX RULES AND CODEBASE STRUCTURE
 
 🔧 CURRENT CODEBASE STRUCTURE
 
-📁 Docs  
-*(Empty for now, future use: disclaimers, documentation, notes)*
+📁 Docs
+disclaimer.txt – project legality statement
+important_notes_for_codex.txt – usage context and rules
+codex_rules_and_structure.txt – this file
 
 📁 Scripts  
 ├── 📁 General Tools  
 │   └── *(Empty)*  
 │   ↳ Will contain common utility features like ESP, fly, speed, noclip, etc.
 
-├── 📁 Research Tools  
-│   └── `Character Info Watcher.lua`  
-│       ↳ Shows player's current character stats like health and walk speed.  
-│       ↳ Used for introspection, debugging, or stat analysis.  
+├── 📁 Research Tools
+│   └── `Character Info Watcher.lua`
+│       ↳ Module providing Enable/Disable for a character stats watcher GUI.
+│       ↳ Used for introspection, debugging, or stat analysis.
 │       ↳ May expand to track other player or game data.
 
 ├── 📁 Steal a Baddie Project  
@@ -42,23 +44,27 @@ CODEX RULES AND CODEBASE STRUCTURE
 │       ↳ Fully working version of the project.  
 │       ↳ Main execution target for this module.
 
-├── 📁 UiLib  
-│   ├── `MainUI.lua`  
-│   │   ↳ Main UI layout converted to script via Gui-to-Lua.  
-│   │   ↳ Builds entire GUI, returns references to key objects.  
-│   │   ↳ Used as the foundation for all UI logic and rendering.  
+├── 📁 UiLib
+│   ├── `MainUI.lua`
+│   │   ↳ Main UI layout converted to script via Gui-to-Lua.
+│   │   ↳ Builds entire GUI, returns references to key objects.
+│   │   ↳ Used as the foundation for all UI logic and rendering.
 │   │   ↳ Includes: Background, Side menu, Grid/List scrolling frames, Personal info, etc.
 
-│   ├── `AddMenuButton.lua`  
-│   │   ↳ Utility module for dynamically adding buttons to the Side menu.  
-│   │   ↳ Handles template cloning, text assignment, callback binding.  
+│   ├── `AddMenuButton.lua`
+│   │   ↳ Utility module for dynamically adding buttons to the Side menu.
+│   │   ↳ Handles template cloning, text assignment, callback binding.
 │   │   ↳ Used by loader.lua to insert dynamic pages like “Research Menu”.
+│   ├── `AddToggleGridButton.lua`
+│   │   ↳ Adds toggleable buttons to GridScrolling and tracks state.
+│   │   ↳ Provides Reset() to disable active modules.
 
-│   └── `loader.lua`  
-│       ↳ Loads MainUI and AddMenuButton.  
-│       ↳ Initializes main GUI logic:  
-│          • Menu button toggle  
-│          • Adds “Research Menu” and “General”  
-│          • Toggles between List and Grid views  
-│          • Sets player name & avatar  
+│   └── `loader.lua`
+│       ↳ Loads MainUI and AddMenuButton.
+│       ↳ Initializes main GUI logic:
+│          • Menu button toggle
+│          • Adds “Research Menu” and “General”
+│          • Toggles between List and Grid views
+│          • Sets player name & avatar
 │          • Handles close (X) logic
+│          • Adds sample toggle buttons to Research Menu
