@@ -38,6 +38,15 @@ return function()
     )
     print("[loader] sidebar module loaded")
 
+    -- Populate pages with default toggle buttons
+    local toggleLib = loadRemote("Scripts/UiLib/AddToggleGridButton.lua")
+    loadRemote(
+        "Scripts/UiLib/default_buttons.lua",
+        pagesModule,
+        toggleLib,
+        loadRemote
+    )
+
     print("[loader] finished")
 end
 
