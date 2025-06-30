@@ -69,9 +69,12 @@ codex_rules_and_structure.txt – this file
 │   │   ↳ Builds the sidebar menu using AddMenuButton.
 │   │   ↳ Connects sidebar buttons to pages.lua page switching.
 │   ├── `default_buttons.lua`
-│   │   ↳ Populates pages with toggleable grid buttons like "Steal a Baddie".
+│   │   ↳ Populates pages with toggleable grid buttons.
+│   │   ↳ Adds "Character Info Watcher" to Research, "Simple ESP" to General,
+│   │     and "Steal a Baddie" to StealGames.
 │   │   ↳ Uses AddToggleGridButton to load modules on demand.
 │   └── `loader.lua`
 │       ↳ Master loader hub for the UI library.
 │       ↳ Dynamically fetches and executes MainUI.lua, pages.lua, and sidebar.lua.
+│       ↳ Sets player info and avatar viewport, and wires menu/X buttons for toggling the UI.
 │       ↳ Prints progress for debugging while doing minimal environment setup.

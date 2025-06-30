@@ -18,6 +18,8 @@ return function(pagesModule, toggleLib, loadRemote)
         end)
     end
 
+    add("Research", "Character Info Watcher", "Scripts/Research Tools/Character Info Watcher.lua")
+    add("General", "Simple ESP", "Scripts/General Tools/SimpleESP.lua")
     add("StealGames", "Steal a Baddie", "Scripts/Steal a Baddie Project/combined_auto_tp_stealer.lua")
 
     return controllers

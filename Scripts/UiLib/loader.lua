@@ -19,6 +19,24 @@ return function()
     local ui = loadRemote("Scripts/UiLib/MainUI.lua")
     print("[loader] MainUI loaded")
 
+    -- Personal info setup
+    local Players = game:GetService("Players")
+    ui.Version.Text = "Developer"
+    ui.PlayerName.Text = Players.LocalPlayer.Name
+
+    -- Render the player's avatar in the viewport
+    local viewport = ui.Player
+    viewport:ClearAllChildren()
+    local cam = Instance.new("Camera")
+    cam.Parent = viewport
+    viewport.CurrentCamera = cam
+    local desc = Players:GetHumanoidDescriptionFromUserId(Players.LocalPlayer.UserId)
+    local model = Players:CreateHumanoidModelFromDescription(desc, Enum.HumanoidRigType.R15)
+    local world = Instance.new("WorldModel")
+    world.Parent = viewport
+    model.Parent = world
+    cam.CFrame = CFrame.new(model.Head.Position + Vector3.new(0, 0, 5), model.Head.Position)
+
     -- Utility for cloning sidebar buttons
     local addMenuButton = loadRemote("Scripts/UiLib/AddMenuButton.lua")
 
@@ -46,6 +64,15 @@ return function()
         toggleLib,
         loadRemote
     )
+
+    -- Menu controls
+    ui.MenuButton.MouseButton1Click:Connect(function()
+        ui.Background.Visible = not ui.Background.Visible
+    end)
+
+    ui.X.MouseButton1Click:Connect(function()
+        ui.Background.Visible = false
+    end)
 
     print("[loader] finished")
 end
