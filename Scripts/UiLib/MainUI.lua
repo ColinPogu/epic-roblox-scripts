@@ -268,6 +268,7 @@ return {
         GridScrolling = GridScrolling,
         ListScrolling = ListScrolling,
         GridTemplate = TextButton_2,
+        ListTemplate = TextButton,
         MenusTemplate = Menus,
         MenuButton = MenuButton,
         PlayerName = PlayerName,

@@ -23,7 +23,8 @@ return function()
     local addMenuButton = loadRemote("Scripts/UiLib/AddMenuButton.lua")
 
     -- Set up pages container and default pages using the GridScrolling frame
-    local pagesModule = loadRemote("Scripts/UiLib/pages.lua", ui.GridScrolling, ui.GridTemplate)
+    -- Create page manager using the scrolling frame templates
+    local pagesModule = loadRemote("Scripts/UiLib/pages.lua", ui)
     print("[loader] pages module loaded")
 
     -- Build the sidebar and connect buttons to page switching
