@@ -1,0 +1,32 @@
+DISCLAIMER
+
+This project includes a custom UI library and executor logic designed strictly for use within games owned and developed by the user. All functionality is intended to run in Roblox Studio or in personal game environments.
+
+✔ LEGAL USAGE
+
+According to Roblox's Developer Forum and Terms of Use, using script executors in Roblox Studio or within your own games is NOT a violation of the Terms of Service.
+
+Key points:
+- Using external scripts in YOUR OWN games or during development in Studio is permitted.
+- This project does NOT tamper with, inject into, or modify the gameplay of other users' experiences.
+- The executor included is used solely to load your own Lua-based UI and scripts for convenience.
+
+❌ PROHIBITED USAGE
+
+This project must NOT be used to:
+- Execute scripts in games you do not own.
+- Inject, modify, or exploit other developers' work.
+- Distribute exploit tools that target other Roblox experiences.
+
+Doing so would violate Roblox’s policies and may result in account suspension or termination.
+
+📌 SOURCE REFERENCES
+- Roblox Terms of Use: https://en.help.roblox.com/hc/en-us/articles/115004647846
+- Developer Forum: https://devforum.roblox.com/t/can-i-get-banned-for-using-executors-etc-in-roblox-studio/3132435
+- Community discussion: https://devforum.roblox.com/t/can-you-get-banned-for-own-script-executor/2499992
+
+⚠ REMINDER
+
+This UI library and executor loader are for self-hosted, personal, or internal testing use only. By using this system, you acknowledge responsibility for ensuring your usage complies with Roblox’s developer and community guidelines.
+
+Made for educational, creative, and development purposes only.

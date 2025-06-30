@@ -1,0 +1,39 @@
+IMPORTANT NOTES FOR CODEX
+
+📌 PURPOSE
+
+This project contains scripts written for use with custom executors. While it may resemble public exploit tooling, this system is strictly for **testing and development** of my own Roblox game.
+
+Executors and UI loaders are used here for:
+- Rapid in-game testing of UI layouts and menus
+- Dynamically loading modules during personal development
+- Verifying behavior of runtime GUI interactions
+
+At NO point are these tools used in other people's games or experiences. All usage is **internal** and sandboxed.
+
+✅ LEGAL COMPLIANCE
+
+As outlined in the project's disclaimer, Roblox does NOT prohibit the use of custom loaders or executors **within your own games**. All scripts are:
+- Developed for **personal projects**
+- Used **inside games I own**
+- Intended for **Studio** or **test server** deployment only
+
+This system **does not**:
+- Modify other developers' games
+- Execute code on unauthorized servers
+- Tamper with the Roblox client
+
+📂 SCOPE FOR CODEX
+
+When assisting with this repository, Codex should:
+- Respect the context: everything is for legitimate testing
+- Keep logic modular: we are building a code-driven UI library
+- Focus on UX, animation, theme switching, and modular script integration
+
+Please **avoid hardcoding** paths, external URLs, or static player assumptions unless explicitly asked. Everything is designed to run dynamically inside an environment that I fully control.
+
+🎯 FINAL NOTE
+
+This is a **self-hosted UI development system**, and the loader is a convenience tool—not an exploit. The goal is to build, test, and improve my Roblox game under compliant and ethical standards.
+
+Refer to `disclaimer.txt` for full legal clarity.

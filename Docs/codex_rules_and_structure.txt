@@ -1,0 +1,64 @@
+CODEX RULES AND CODEBASE STRUCTURE
+
+📜 RULES FOR CODEX
+
+1. This file must always be kept UPDATED.
+   - Any time a new script is created, renamed, or removed, Codex should update this file.
+   - Any time a script’s **purpose** or **connections** change, update its description.
+
+2. This file serves as a LIVE MAP of the codebase.
+   - Codex should read from this to understand structure instead of scanning everything.
+   - Codex should write to this to reflect the latest structure after code changes.
+
+3. This is the central record for:
+   - Script names and locations
+   - Their purpose
+   - What other modules they call or interact with
+   - Their current state (working, stub, needs update, etc)
+
+🔧 CURRENT CODEBASE STRUCTURE
+
+📁 Docs  
+*(Empty for now, future use: disclaimers, documentation, notes)*
+
+📁 Scripts  
+├── 📁 General Tools  
+│   └── *(Empty)*  
+│   ↳ Will contain common utility features like ESP, fly, speed, noclip, etc.
+
+├── 📁 Research Tools  
+│   └── `Character Info Watcher.lua`  
+│       ↳ Shows player's current character stats like health and walk speed.  
+│       ↳ Used for introspection, debugging, or stat analysis.  
+│       ↳ May expand to track other player or game data.
+
+├── 📁 Steal a Baddie Project  
+│   ├── `autostealer.lua` – Part 1  
+│   │   ↳ Original working script to perform stealing logic.  
+│   ├── `autotp and stealer fail.lua` – Part 2  
+│   │   ↳ Combined TP and steal attempt; doesn’t fully function.  
+│   └── `combined_auto_tp_stealer.lua` – Final  
+│       ↳ Merges TP and steal logic correctly.  
+│       ↳ Fully working version of the project.  
+│       ↳ Main execution target for this module.
+
+├── 📁 UiLib  
+│   ├── `MainUI.lua`  
+│   │   ↳ Main UI layout converted to script via Gui-to-Lua.  
+│   │   ↳ Builds entire GUI, returns references to key objects.  
+│   │   ↳ Used as the foundation for all UI logic and rendering.  
+│   │   ↳ Includes: Background, Side menu, Grid/List scrolling frames, Personal info, etc.
+
+│   ├── `AddMenuButton.lua`  
+│   │   ↳ Utility module for dynamically adding buttons to the Side menu.  
+│   │   ↳ Handles template cloning, text assignment, callback binding.  
+│   │   ↳ Used by loader.lua to insert dynamic pages like “Research Menu”.
+
+│   └── `loader.lua`  
+│       ↳ Loads MainUI and AddMenuButton.  
+│       ↳ Initializes main GUI logic:  
+│          • Menu button toggle  
+│          • Adds “Research Menu” and “General”  
+│          • Toggles between List and Grid views  
+│          • Sets player name & avatar  
+│          • Handles close (X) logic

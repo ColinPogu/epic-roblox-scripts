@@ -2,6 +2,10 @@ local MainUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinP
 local AddMenuButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddMenuButton.lua"))()
 local Players = game:GetService("Players")
 
+-- Make GUI draggable
+MainUI.Background.Active = true
+MainUI.Background.Draggable = true
+
 -- Toggle full UI visibility via MenuButton
 MainUI.MenuButton.MouseButton1Click:Connect(function()
 	MainUI.Background.Visible = not MainUI.Background.Visible
@@ -46,7 +50,7 @@ task.spawn(function()
 	MainUI.Player.CurrentCamera = camera
 end)
 
--- X button closes the UI
+-- X button hides UI but not MenuButton
 MainUI.X.MouseButton1Click:Connect(function()
-	MainUI.ScreenGui:Destroy()
+	MainUI.Background.Visible = false
 end)
