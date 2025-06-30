@@ -1,142 +1,110 @@
 return function()
-    print("[loader] Starting UI initialization")
+    print("Loader started")
 
-    local Players = game:GetService("Players")
+    local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-    -- wait for assets to load
-    task.wait(5)
+    -- create main screen gui
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "EpicLoaderGui"
+    gui.ResetOnSpawn = false
+    gui.Parent = playerGui
 
-    print("[loader] Loading MainUI")
-    local MainUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/MainUI.lua"))()
-    print("[loader] MainUI created")
+    -- main frame container
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Name = "MainFrame"
+    mainFrame.Size = UDim2.new(0, 400, 0, 300)
+    mainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    mainFrame.Active = true
+    mainFrame.Draggable = true
+    mainFrame.Parent = gui
+    print("MainFrame created")
 
-    print("[loader] Loading helper modules")
-    local AddMenuButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddMenuButton.lua"))()
-    local ToggleGridFactory = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddToggleGridButton.lua"))()
+    -- sidebar for navigation
+    local sidebar = Instance.new("Frame")
+    sidebar.Name = "Sidebar"
+    sidebar.Size = UDim2.new(0, 120, 1, 0)
+    sidebar.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    sidebar.Parent = mainFrame
+    print("Sidebar ready")
 
--- utility to create an isolated grid layout with its own toggle controller
-local function createGridPage(name)
-    print("[loader] Creating grid page", name)
-    local frame = MainUI.GridScrolling:Clone()
-    frame.Visible = false
-    frame.Parent = MainUI.Background
-    local template = frame:FindFirstChild(MainUI.GridTemplate.Name)
-    local controller = ToggleGridFactory.CreateController()
-    return {
-        frame = frame,
-        template = template,
-        controller = controller
+    local pagesContainer = Instance.new("Frame")
+    pagesContainer.Name = "Pages"
+    pagesContainer.Size = UDim2.new(1, -120, 1, 0)
+    pagesContainer.Position = UDim2.new(0, 120, 0, 0)
+    pagesContainer.BackgroundTransparency = 1
+    pagesContainer.Parent = mainFrame
+
+    local function createPage(name)
+        local page = Instance.new("Frame")
+        page.Name = name
+        page.Size = UDim2.new(1, 0, 1, 0)
+        page.BackgroundTransparency = 1
+        page.Visible = false
+        page.Parent = pagesContainer
+
+        local layout = Instance.new("UIGridLayout")
+        layout.CellSize = UDim2.new(0, 120, 0, 30)
+        layout.CellPadding = UDim2.new(0, 5, 0, 5)
+        layout.Parent = page
+
+        -- placeholder buttons
+        for i = 1, 3 do
+            local btn = Instance.new("TextButton")
+            btn.Text = name .. " Btn " .. i
+            btn.Size = UDim2.fromScale(0, 0)
+            btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+            btn.TextColor3 = Color3.new(1, 1, 1)
+            btn.Parent = page
+        end
+
+        return page
+    end
+
+    local pages = {
+        Research = createPage("Research"),
+        General = createPage("General"),
+        StealGames = createPage("StealGames")
     }
-end
 
--- pages table holds all sidebar page data
-local pages = {
-    Research = createGridPage("Research"),
-    General = createGridPage("General"),
-    StealGames = createGridPage("StealGames")
-}
-
-local function hideAll()
-    for _, info in pairs(pages) do
-        info.controller.Reset()
-        info.frame.Visible = false
+    local function hideAll()
+        for _, p in pairs(pages) do
+            p.Visible = false
+        end
     end
-end
 
-local function showPage(name)
-    print("[loader] Showing page", name)
-    hideAll()
-    local page = pages[name]
-    if page then
-        page.frame.Visible = true
-    end
-end
-
--- Make GUI draggable
-MainUI.Background.Active = true
-MainUI.Background.Draggable = true
-
--- Toggle full UI visibility via MenuButton
-MainUI.MenuButton.MouseButton1Click:Connect(function()
-        MainUI.Background.Visible = not MainUI.Background.Visible
-        print("[loader] Toggled UI", MainUI.Background.Visible)
-end)
-
--- Add sidebar buttons
-print("[loader] Creating sidebar buttons")
-AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "Research", function()
-    showPage("Research")
-end)
-print("[loader] Added sidebar button: Research")
-AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "General", function()
-    showPage("General")
-end)
-print("[loader] Added sidebar button: General")
-AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "Steal Games", function()
-    showPage("StealGames")
-end)
-print("[loader] Added sidebar button: Steal Games")
-
--- Set PlayerName and Version labels
-local player = Players.LocalPlayer
-MainUI.PlayerName.Text = player.Name
-MainUI.Version.Text = "Developer"
-
--- Example button in Research Menu
-pages.Research.controller.AddButton(
-    pages.Research.frame,
-    pages.Research.template,
-    "Character Info",
-    function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/Research%20Tools/Character%20Info%20Watcher.lua"))()
-    end
-)
-
-print("[loader] Added Research button: Character Info")
-
-pages.General.controller.AddButton(
-    pages.General.frame,
-    pages.General.template,
-    "Toggle ESP",
-    function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/General%20Tools/SimpleESP.lua"))()
-    end
-)
-
-print("[loader] Added General button: Toggle ESP")
-
-pages.StealGames.controller.AddButton(
-    pages.StealGames.frame,
-    pages.StealGames.template,
-    "Steal a Baddie",
-    function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/Steal%20a%20Baddie%20Project/combined_auto_tp_stealer.lua"))()
-    end
-)
-
-print("[loader] Added StealGames button: Steal a Baddie")
-
--- Show local player's avatar in ViewportFrame using their UserId
-task.spawn(function()
-        local avatar = Players:CreateHumanoidModelFromUserId(player.UserId)
-        MainUI.Player:ClearAllChildren()
-        avatar.Parent = MainUI.Player
-
-	local camera = Instance.new("Camera")
-	camera.CFrame = CFrame.new(Vector3.new(0, 2, 8), Vector3.new(0, 2, 0))
-        camera.Parent = MainUI.Player
-        MainUI.Player.CurrentCamera = camera
-end)
-
-print("[loader] Avatar viewport setup complete")
-
--- X button hides UI but not MenuButton
-MainUI.X.MouseButton1Click:Connect(function()
+    local function showPage(name)
         hideAll()
-        MainUI.Background.Visible = false
-        print("[loader] Closed UI window")
-end)
+        local page = pages[name]
+        if page then
+            page.Visible = true
+            print("Showing page", name)
+        end
+    end
 
-print("[loader] UI initialization complete")
+    local buttonTemplate = Instance.new("TextButton")
+    buttonTemplate.Size = UDim2.new(1, 0, 0, 30)
+    buttonTemplate.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    buttonTemplate.TextColor3 = Color3.new(1, 1, 1)
 
+    local layout = Instance.new("UIListLayout")
+    layout.Parent = sidebar
+
+    local function addSidebarButton(label, key)
+        local btn = buttonTemplate:Clone()
+        btn.Text = label
+        btn.Parent = sidebar
+        btn.MouseButton1Click:Connect(function()
+            showPage(key)
+        end)
+    end
+
+    addSidebarButton("Research", "Research")
+    addSidebarButton("General", "General")
+    addSidebarButton("Steal Games", "StealGames")
+    buttonTemplate:Destroy()
+
+    showPage("Research")
+
+    print("Loader finished")
 end
