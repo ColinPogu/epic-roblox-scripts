@@ -4,9 +4,15 @@ return function()
     local baseUrl = "https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/"
     local function loadRemote(path, ...)
         print("[loader] loading " .. path)
+        local args = { ... }
         local source = game:HttpGet(baseUrl .. path)
-        local fn = loadstring(source)
-        return fn(...)
+        local result = loadstring(source)(table.unpack(args))
+
+        if type(result) == "function" and #args > 0 then
+            result = result(table.unpack(args))
+        end
+
+        return result
     end
 
     -- Load main UI which creates the ScreenGui and base layout
