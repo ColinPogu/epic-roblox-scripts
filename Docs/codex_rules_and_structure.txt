@@ -24,9 +24,11 @@ important_notes_for_codex.txt – usage context and rules
 codex_rules_and_structure.txt – this file
 
 📁 Scripts  
-├── 📁 General Tools  
-│   └── *(Empty)*  
-│   ↳ Will contain common utility features like ESP, fly, speed, noclip, etc.
+├── 📁 General Tools
+│   └── `SimpleESP.lua`
+│       ↳ Provides basic Highlight-based ESP for other players.
+│       ↳ Exposes Enable/Disable functions used by UI toggle buttons.
+│   ↳ Folder may contain other utilities like fly, speed, noclip, etc.
 
 ├── 📁 Research Tools
 │   └── `Character Info Watcher.lua`
@@ -56,17 +58,12 @@ codex_rules_and_structure.txt – this file
 │   │   ↳ Handles template cloning, text assignment, callback binding.
 │   │   ↳ Used by loader.lua to insert dynamic pages like “Research Menu”.
 │   ├── `AddToggleGridButton.lua`
-│   │   ↳ Adds toggleable buttons to GridScrolling and tracks state.
-│   │   ↳ Provides Reset() to disable active modules.
+│   │   ↳ Returns CreateController() to build isolated toggle controllers.
+│   │   ↳ Each controller manages its own buttons and Reset logic.
 
 │   └── `loader.lua`
-│       ↳ Loads MainUI and AddMenuButton.
-│       ↳ Initializes main GUI logic:
-│          • Waits 5s before loading UI
-│          • Menu button toggle
-│          • Adds “Research Menu”, “General”, and “Steal Games”
-│          • Toggles between List and Grid views
-│          • Sets player name & avatar from UserId
-│          • Handles close (X) logic
-│          • Adds sample toggle buttons to Research Menu
-│          • Adds TP Stealer button under Steal Games
+│       ↳ Loads MainUI and menu utilities.
+│       ↳ Creates independent Grid layouts for Research, General, and Steal Games.
+│       ↳ Each sidebar button opens its own cloned layout and closes the others.
+│       ↳ Adds Character Info, Toggle ESP, and Steal a Baddie buttons to respective pages.
+│       ↳ Handles avatar display, menu toggle, and close (X) behavior.

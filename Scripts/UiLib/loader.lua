@@ -5,7 +5,43 @@ task.wait(5)
 
 local MainUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/MainUI.lua"))()
 local AddMenuButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddMenuButton.lua"))()
-local AddToggleGridButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddToggleGridButton.lua"))()
+local ToggleGridFactory = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddToggleGridButton.lua"))()
+
+-- utility to create an isolated grid layout with its own toggle controller
+local function createGridPage()
+    local frame = MainUI.GridScrolling:Clone()
+    frame.Visible = false
+    frame.Parent = MainUI.Background
+    local template = frame:FindFirstChild(MainUI.GridTemplate.Name)
+    local controller = ToggleGridFactory.CreateController()
+    return {
+        frame = frame,
+        template = template,
+        controller = controller
+    }
+end
+
+-- pages table holds all sidebar page data
+local pages = {
+    Research = createGridPage(),
+    General = createGridPage(),
+    StealGames = createGridPage()
+}
+
+local function hideAll()
+    for _, info in pairs(pages) do
+        info.controller.Reset()
+        info.frame.Visible = false
+    end
+end
+
+local function showPage(name)
+    hideAll()
+    local page = pages[name]
+    if page then
+        page.frame.Visible = true
+    end
+end
 
 -- Make GUI draggable
 MainUI.Background.Active = true
@@ -16,38 +52,15 @@ MainUI.MenuButton.MouseButton1Click:Connect(function()
 	MainUI.Background.Visible = not MainUI.Background.Visible
 end)
 
--- Add "Research Menu" button to Side
-AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "Research Menu", function()
-        AddToggleGridButton.Reset()
-        MainUI.GridScrolling.Visible = true
-        MainUI.ListScrolling.Visible = false
+-- Add sidebar buttons
+AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "Research", function()
+    showPage("Research")
 end)
-
--- Add "General" button to Side
 AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "General", function()
-        AddToggleGridButton.Reset()
-        MainUI.ListScrolling.Visible = true
-        MainUI.GridScrolling.Visible = false
+    showPage("General")
 end)
-
--- Add "Steal Games" button to Side
 AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "Steal Games", function()
-        AddToggleGridButton.Reset()
-        for _, child in ipairs(MainUI.GridScrolling:GetChildren()) do
-                if child ~= MainUI.GridTemplate and child:IsA("GuiObject") then
-                        child:Destroy()
-                end
-        end
-        MainUI.GridScrolling.Visible = true
-        MainUI.ListScrolling.Visible = false
-        AddToggleGridButton.AddButton(
-                MainUI.GridScrolling,
-                MainUI.GridTemplate,
-                "TP Stealer",
-                function()
-                        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/Steal%20a%20Baddie%20Project/combined_auto_tp_stealer.lua"))()
-                end
-        )
+    showPage("StealGames")
 end)
 
 -- Set PlayerName and Version labels
@@ -56,13 +69,31 @@ MainUI.PlayerName.Text = player.Name
 MainUI.Version.Text = "Developer"
 
 -- Example button in Research Menu
-AddToggleGridButton.AddButton(
-        MainUI.GridScrolling,
-        MainUI.GridTemplate,
-        "Character Info",
-        function()
-                return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/Research%20Tools/Character%20Info%20Watcher.lua"))()
-        end
+pages.Research.controller.AddButton(
+    pages.Research.frame,
+    pages.Research.template,
+    "Character Info",
+    function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/Research%20Tools/Character%20Info%20Watcher.lua"))()
+    end
+)
+
+pages.General.controller.AddButton(
+    pages.General.frame,
+    pages.General.template,
+    "Toggle ESP",
+    function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/General%20Tools/SimpleESP.lua"))()
+    end
+)
+
+pages.StealGames.controller.AddButton(
+    pages.StealGames.frame,
+    pages.StealGames.template,
+    "Steal a Baddie",
+    function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/Steal%20a%20Baddie%20Project/combined_auto_tp_stealer.lua"))()
+    end
 )
 
 -- Show local player's avatar in ViewportFrame using their UserId
@@ -79,6 +110,6 @@ end)
 
 -- X button hides UI but not MenuButton
 MainUI.X.MouseButton1Click:Connect(function()
-        AddToggleGridButton.Reset()
+        hideAll()
         MainUI.Background.Visible = false
 end)
