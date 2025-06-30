@@ -25,9 +25,12 @@ codex_rules_and_structure.txt – this file
 
 📁 Scripts  
 ├── 📁 General Tools
-│   └── `SimpleESP.lua`
-│       ↳ Provides basic Highlight-based ESP for other players.
-│       ↳ Exposes Enable/Disable functions used by UI toggle buttons.
+│   ├── `SimpleESP.lua`
+│   │   ↳ Provides basic Highlight-based ESP for other players.
+│   │   ↳ Exposes Enable/Disable functions used by UI toggle buttons.
+│   ├── `AIMovement.lua`
+│   │   ↳ Pathfinding helper that moves the local player toward a stored target.
+│   │   ↳ Recomputes paths when blocked and avoids nearby players.
 │   ↳ Folder may contain other utilities like fly, speed, noclip, etc.
 
 ├── 📁 Research Tools
