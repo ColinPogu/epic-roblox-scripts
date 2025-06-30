@@ -55,6 +55,7 @@ ListScrolling.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ListScrolling.BorderSizePixel = 0
 ListScrolling.Position = UDim2.new(0.291039824, 0, 0.142204762, 0)
 ListScrolling.Size = UDim2.new(0.708431184, 0, 0.857794821, 0)
+ListScrolling.Visible = false
 
 TextButton.Parent = ListScrolling
 TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -250,5 +251,11 @@ return {
 	Background = Background,
 	Side = Side,
 	GridScrolling = GridScrolling,
-	MenusTemplate = Menus, -- button template for cloning
+	ListScrolling = ListScrolling,
+	MenusTemplate = Menus,
+	MenuButton = MenuButton,
+	PlayerName = PlayerName,
+	Version = Version,
+	Player = Player,
+	X = X
 }
