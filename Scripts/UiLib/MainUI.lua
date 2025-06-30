@@ -247,15 +247,16 @@ MenuButton.TextSize = 14.000
 MenuButton.TextWrapped = true
 
 return {
-	ScreenGui = ScreenGui,
-	Background = Background,
-	Side = Side,
-	GridScrolling = GridScrolling,
-	ListScrolling = ListScrolling,
-	MenusTemplate = Menus,
-	MenuButton = MenuButton,
-	PlayerName = PlayerName,
-	Version = Version,
-	Player = Player,
+        ScreenGui = ScreenGui,
+        Background = Background,
+        Side = Side,
+        GridScrolling = GridScrolling,
+        ListScrolling = ListScrolling,
+        GridTemplate = TextButton_2,
+        MenusTemplate = Menus,
+        MenuButton = MenuButton,
+        PlayerName = PlayerName,
+        Version = Version,
+        Player = Player,
 	X = X
 }
