@@ -22,5 +22,19 @@ return function(pagesModule, toggleLib, loadRemote)
     add("General", "Simple ESP", "Scripts/General Tools/SimpleESP.lua")
     add("StealGames", "Steal a Baddie", "Scripts/Steal a Baddie Project/combined_auto_tp_stealer.lua")
 
+    do
+        local page = pagesModule.pages["StealGames"]
+        if page then
+            local ctrl = controllers["StealGames"]
+            if not ctrl then
+                ctrl = toggleLib.CreateController()
+                controllers["StealGames"] = ctrl
+            end
+            ctrl.AddButton(page.Frame, page.Template, "AI Movement", function()
+                return loadRemote("Scripts/General Tools/AIMovementUI.lua", loadRemote)
+            end)
+        end
+    end
+
     return controllers
 end
