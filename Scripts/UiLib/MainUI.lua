@@ -28,6 +28,12 @@ local TextButton_2 = Instance.new("TextButton")
 local UIPadding_3 = Instance.new("UIPadding")
 local UIGridLayout = Instance.new("UIGridLayout")
 local MenuButton = Instance.new("TextButton")
+local function addStroke(obj)
+    local s = Instance.new("UIStroke")
+    s.Color = Color3.new(0,0,0)
+    s.Thickness = 1
+    s.Parent = obj
+end
 
 --Properties:
 
@@ -69,6 +75,7 @@ TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton.TextScaled = true
 TextButton.TextSize = 14.000
 TextButton.TextWrapped = true
+addStroke(TextButton)
 
 UIListLayout.Parent = ListScrolling
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -90,6 +97,7 @@ TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel.TextScaled = true
 TextLabel.TextSize = 14.000
 TextLabel.TextWrapped = true
+addStroke(TextLabel)
 
 Side.Name = "Side"
 Side.Parent = Background
@@ -112,6 +120,7 @@ Menus.Font = Enum.Font.SourceSans
 Menus.TextColor3 = Color3.fromRGB(255, 255, 255)
 Menus.TextSize = 48.000
 Menus.TextWrapped = true
+addStroke(Menus)
 
 UIListLayout_2.Parent = Side
 UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
@@ -153,6 +162,7 @@ PlayerName.TextColor3 = Color3.fromRGB(255, 255, 255)
 PlayerName.TextScaled = true
 PlayerName.TextSize = 14.000
 PlayerName.TextWrapped = true
+addStroke(PlayerName)
 
 Version.Name = "Version"
 Version.Parent = Personal
@@ -169,6 +179,7 @@ Version.TextColor3 = Color3.fromRGB(255, 255, 255)
 Version.TextScaled = true
 Version.TextSize = 14.000
 Version.TextWrapped = true
+addStroke(Version)
 
 X.Name = "X"
 X.Parent = Background
@@ -184,6 +195,7 @@ X.TextColor3 = Color3.fromRGB(255, 0, 0)
 X.TextScaled = true
 X.TextSize = 14.000
 X.TextWrapped = true
+addStroke(X)
 
 Name.Name = "Name"
 Name.Parent = Background
@@ -200,6 +212,7 @@ Name.TextColor3 = Color3.fromRGB(255, 255, 255)
 Name.TextScaled = true
 Name.TextSize = 14.000
 Name.TextWrapped = true
+addStroke(Name)
 
 GridScrolling.Name = "GridScrolling"
 GridScrolling.Parent = Background
@@ -222,6 +235,7 @@ TextButton_2.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton_2.TextScaled = true
 TextButton_2.TextSize = 14.000
 TextButton_2.TextWrapped = true
+addStroke(TextButton_2)
 
 UIPadding_3.Parent = GridScrolling
 UIPadding_3.PaddingLeft = UDim.new(0, 5)
@@ -245,6 +259,7 @@ MenuButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 MenuButton.TextScaled = true
 MenuButton.TextSize = 14.000
 MenuButton.TextWrapped = true
+addStroke(MenuButton)
 
 return {
         ScreenGui = ScreenGui,

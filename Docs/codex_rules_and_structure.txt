@@ -62,9 +62,11 @@ codex_rules_and_structure.txt – this file
 │   └── `loader.lua`
 │       ↳ Loads MainUI and AddMenuButton.
 │       ↳ Initializes main GUI logic:
+│          • Waits 5s before loading UI
 │          • Menu button toggle
-│          • Adds “Research Menu” and “General”
+│          • Adds “Research Menu”, “General”, and “Steal Games”
 │          • Toggles between List and Grid views
-│          • Sets player name & avatar
+│          • Sets player name & avatar from UserId
 │          • Handles close (X) logic
 │          • Adds sample toggle buttons to Research Menu
+│          • Adds TP Stealer button under Steal Games
