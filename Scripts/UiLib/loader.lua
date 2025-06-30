@@ -1,14 +1,22 @@
-local Players = game:GetService("Players")
+return function()
+    print("[loader] Starting UI initialization")
 
--- wait for assets to load
-task.wait(5)
+    local Players = game:GetService("Players")
 
-local MainUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/MainUI.lua"))()
-local AddMenuButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddMenuButton.lua"))()
-local ToggleGridFactory = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddToggleGridButton.lua"))()
+    -- wait for assets to load
+    task.wait(5)
+
+    print("[loader] Loading MainUI")
+    local MainUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/MainUI.lua"))()
+    print("[loader] MainUI created")
+
+    print("[loader] Loading helper modules")
+    local AddMenuButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddMenuButton.lua"))()
+    local ToggleGridFactory = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddToggleGridButton.lua"))()
 
 -- utility to create an isolated grid layout with its own toggle controller
-local function createGridPage()
+local function createGridPage(name)
+    print("[loader] Creating grid page", name)
     local frame = MainUI.GridScrolling:Clone()
     frame.Visible = false
     frame.Parent = MainUI.Background
@@ -23,9 +31,9 @@ end
 
 -- pages table holds all sidebar page data
 local pages = {
-    Research = createGridPage(),
-    General = createGridPage(),
-    StealGames = createGridPage()
+    Research = createGridPage("Research"),
+    General = createGridPage("General"),
+    StealGames = createGridPage("StealGames")
 }
 
 local function hideAll()
@@ -36,6 +44,7 @@ local function hideAll()
 end
 
 local function showPage(name)
+    print("[loader] Showing page", name)
     hideAll()
     local page = pages[name]
     if page then
@@ -49,19 +58,24 @@ MainUI.Background.Draggable = true
 
 -- Toggle full UI visibility via MenuButton
 MainUI.MenuButton.MouseButton1Click:Connect(function()
-	MainUI.Background.Visible = not MainUI.Background.Visible
+        MainUI.Background.Visible = not MainUI.Background.Visible
+        print("[loader] Toggled UI", MainUI.Background.Visible)
 end)
 
 -- Add sidebar buttons
+print("[loader] Creating sidebar buttons")
 AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "Research", function()
     showPage("Research")
 end)
+print("[loader] Added sidebar button: Research")
 AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "General", function()
     showPage("General")
 end)
+print("[loader] Added sidebar button: General")
 AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "Steal Games", function()
     showPage("StealGames")
 end)
+print("[loader] Added sidebar button: Steal Games")
 
 -- Set PlayerName and Version labels
 local player = Players.LocalPlayer
@@ -78,6 +92,8 @@ pages.Research.controller.AddButton(
     end
 )
 
+print("[loader] Added Research button: Character Info")
+
 pages.General.controller.AddButton(
     pages.General.frame,
     pages.General.template,
@@ -86,6 +102,8 @@ pages.General.controller.AddButton(
         return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/General%20Tools/SimpleESP.lua"))()
     end
 )
+
+print("[loader] Added General button: Toggle ESP")
 
 pages.StealGames.controller.AddButton(
     pages.StealGames.frame,
@@ -96,6 +114,8 @@ pages.StealGames.controller.AddButton(
     end
 )
 
+print("[loader] Added StealGames button: Steal a Baddie")
+
 -- Show local player's avatar in ViewportFrame using their UserId
 task.spawn(function()
         local avatar = Players:CreateHumanoidModelFromUserId(player.UserId)
@@ -104,12 +124,19 @@ task.spawn(function()
 
 	local camera = Instance.new("Camera")
 	camera.CFrame = CFrame.new(Vector3.new(0, 2, 8), Vector3.new(0, 2, 0))
-	camera.Parent = MainUI.Player
-	MainUI.Player.CurrentCamera = camera
+        camera.Parent = MainUI.Player
+        MainUI.Player.CurrentCamera = camera
 end)
+
+print("[loader] Avatar viewport setup complete")
 
 -- X button hides UI but not MenuButton
 MainUI.X.MouseButton1Click:Connect(function()
         hideAll()
         MainUI.Background.Visible = false
+        print("[loader] Closed UI window")
 end)
+
+print("[loader] UI initialization complete")
+
+end
