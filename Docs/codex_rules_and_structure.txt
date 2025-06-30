@@ -62,8 +62,8 @@ codex_rules_and_structure.txt – this file
 │   │   ↳ Each controller manages its own buttons and Reset logic.
 
 │   └── `loader.lua`
-│       ↳ Loads MainUI and menu utilities.
+│       ↳ Returns a function that builds MainUI and sidebar pages when invoked.
 │       ↳ Creates independent Grid layouts for Research, General, and Steal Games.
-│       ↳ Each sidebar button opens its own cloned layout and closes the others.
+│       ↳ Sidebar buttons spawn and switch layouts; debug prints trace each step.
 │       ↳ Adds Character Info, Toggle ESP, and Steal a Baddie buttons to respective pages.
 │       ↳ Handles avatar display, menu toggle, and close (X) behavior.
