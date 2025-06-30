@@ -21,7 +21,7 @@ local function stepTowards(destination, stepDistance)
     if currentTween then
         currentTween:Cancel()
     end
-    currentTween = TweenService:Create(root, TweenInfo.new(0.28, Enum.EasingStyle.Linear), {CFrame = CFrame.new(nextPos)})
+    currentTween = TweenService:Create(root, TweenInfo.new(0.3, Enum.EasingStyle.Linear), {CFrame = CFrame.new(nextPos)})
     currentTween:Play()
     currentTween.Completed:Wait()
     return distance - travel
@@ -30,14 +30,13 @@ end
 function module.Start(destination, stepDistance)
     if moving then return end
     moving = true
-    local step = stepDistance or 4
+    local step = stepDistance or 10
     moveThread = task.spawn(function()
         while moving do
-            local remaining = stepTowards(destination, math.clamp(step, 2, 5))
+            local remaining = stepTowards(destination, math.clamp(step, 2, 10))
             if remaining <= 2 then
                 break
             end
-            task.wait(0.3)
         end
         moving = false
     end)
