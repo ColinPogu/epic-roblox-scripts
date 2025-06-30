@@ -52,6 +52,7 @@ codex_rules_and_structure.txt – this file
 │   │   ↳ Builds entire GUI, returns references to key objects.
 │   │   ↳ Used as the foundation for all UI logic and rendering.
 │   │   ↳ Includes: Background, Side menu, Grid/List scrolling frames, Personal info, etc.
+│   │   ↳ Provides GridTemplate and ListTemplate buttons for cloning.
 
 │   ├── `AddMenuButton.lua`
 │   │   ↳ Utility module for dynamically adding buttons to the Side menu.
@@ -61,8 +62,9 @@ codex_rules_and_structure.txt – this file
 │   │   ↳ Returns CreateController() to build isolated toggle controllers.
 │   │   ↳ Each controller manages its own buttons and Reset logic.
 │   ├── `pages.lua`
-│   │   ↳ Dynamically clones page buttons into MainUI's GridScrolling frame.
-│   │   ↳ showPage toggles which set of buttons is visible.
+│   │   ↳ Clones entire scrolling frame templates from MainUI for each page.
+│   │   ↳ Each page owns its cloned frame and button template.
+│   │   ↳ showPage toggles which frame is visible.
 │   ├── `sidebar.lua`
 │   │   ↳ Builds the sidebar menu using AddMenuButton.
 │   │   ↳ Connects sidebar buttons to pages.lua page switching.

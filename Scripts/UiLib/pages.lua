@@ -1,47 +1,59 @@
 print("[pages.lua] executing")
 
-return function(gridFrame, templateButton)
+--[[
+    Page manager that clones scrolling frame templates from MainUI.
+    Each created page gets its own cloned container with a button
+    template inside for dynamic population. Only one page is visible
+    at a time.
+]]
+
+return function(ui)
     print("[pages.lua] setting up pages")
 
-    gridFrame.Visible = true
+    -- template frames and button references
+    local gridTemplateFrame = ui.GridScrolling
+    local listTemplateFrame = ui.ListScrolling
+    local gridButtonTemplate = ui.GridTemplate
+    local listButtonTemplate = ui.ListTemplate
+    local container = ui.Background
 
+    -- table storing page name -> {Frame = ScrollingFrame, Template = TextButton}
     local pages = {}
 
-    local function createPage(name)
-        local buttons = {}
-        for i = 1, 3 do
-            local btn = templateButton:Clone()
-            btn.Text = name .. " Btn " .. i
-            btn.Visible = false
-            btn.Parent = gridFrame
-            table.insert(buttons, btn)
-        end
+    local function createPage(name, useList)
+        -- choose which scrolling container to clone
+        local sourceFrame = useList and listTemplateFrame or gridTemplateFrame
+        local pageFrame = sourceFrame:Clone()
+        pageFrame.Name = name .. "Page"
+        pageFrame.Visible = false
+        pageFrame.Parent = container
 
-        pages[name] = buttons
-        return buttons
+        -- locate the button template inside the cloned frame
+        local templateName = useList and listButtonTemplate.Name or gridButtonTemplate.Name
+        local templateBtn = pageFrame:FindFirstChild(templateName)
+
+        pages[name] = {Frame = pageFrame, Template = templateBtn}
+        return pages[name]
     end
 
     local function hideAll()
-        for _, btns in pairs(pages) do
-            for _, b in ipairs(btns) do
-                b.Visible = false
-            end
+        for _, page in pairs(pages) do
+            page.Frame.Visible = false
         end
     end
 
     local function showPage(name)
         hideAll()
-        local btns = pages[name]
-        if btns then
-            for _, b in ipairs(btns) do
-                b.Visible = true
-            end
+        local page = pages[name]
+        if page then
+            page.Frame.Visible = true
             print("[pages.lua] showing page", name)
         else
             warn("[pages.lua] no page named " .. tostring(name))
         end
     end
 
+    -- default pages
     createPage("Research")
     createPage("General")
     createPage("StealGames")
