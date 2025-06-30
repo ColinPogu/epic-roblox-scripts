@@ -1,7 +1,11 @@
+local Players = game:GetService("Players")
+
+-- wait for assets to load
+task.wait(5)
+
 local MainUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/MainUI.lua"))()
 local AddMenuButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddMenuButton.lua"))()
 local AddToggleGridButton = loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/UiLib/AddToggleGridButton.lua"))()
-local Players = game:GetService("Players")
 
 -- Make GUI draggable
 MainUI.Background.Active = true
@@ -26,6 +30,26 @@ AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "General", function()
         MainUI.GridScrolling.Visible = false
 end)
 
+-- Add "Steal Games" button to Side
+AddMenuButton(MainUI.Side, MainUI.MenusTemplate, "Steal Games", function()
+        AddToggleGridButton.Reset()
+        for _, child in ipairs(MainUI.GridScrolling:GetChildren()) do
+                if child ~= MainUI.GridTemplate and child:IsA("GuiObject") then
+                        child:Destroy()
+                end
+        end
+        MainUI.GridScrolling.Visible = true
+        MainUI.ListScrolling.Visible = false
+        AddToggleGridButton.AddButton(
+                MainUI.GridScrolling,
+                MainUI.GridTemplate,
+                "TP Stealer",
+                function()
+                        return loadstring(game:HttpGet("https://raw.githubusercontent.com/ColinPogu/epic-roblox-scripts/main/Scripts/Steal%20a%20Baddie%20Project/combined_auto_tp_stealer.lua"))()
+                end
+        )
+end)
+
 -- Set PlayerName and Version labels
 local player = Players.LocalPlayer
 MainUI.PlayerName.Text = player.Name
@@ -41,21 +65,11 @@ AddToggleGridButton.AddButton(
         end
 )
 
--- Show local player's character in ViewportFrame
+-- Show local player's avatar in ViewportFrame using their UserId
 task.spawn(function()
-	local character = player.Character or player.CharacterAdded:Wait()
-	local clone = character:Clone()
-
-	-- Remove scripts from clone
-	for _, obj in clone:GetDescendants() do
-		if obj:IsA("Script") or obj:IsA("LocalScript") then
-			obj:Destroy()
-		end
-	end
-
-	-- Clean and show clone in viewport
-	MainUI.Player:ClearAllChildren()
-	clone.Parent = MainUI.Player
+        local avatar = Players:CreateHumanoidModelFromUserId(player.UserId)
+        MainUI.Player:ClearAllChildren()
+        avatar.Parent = MainUI.Player
 
 	local camera = Instance.new("Camera")
 	camera.CFrame = CFrame.new(Vector3.new(0, 2, 8), Vector3.new(0, 2, 0))
