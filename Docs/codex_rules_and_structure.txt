@@ -61,8 +61,8 @@ codex_rules_and_structure.txt – this file
 │   │   ↳ Returns CreateController() to build isolated toggle controllers.
 │   │   ↳ Each controller manages its own buttons and Reset logic.
 │   ├── `pages.lua`
-│   │   ↳ Creates and manages page containers within the UI.
-│   │   ↳ Provides showPage and createPage utilities.
+│   │   ↳ Dynamically clones page buttons into MainUI's GridScrolling frame.
+│   │   ↳ showPage toggles which set of buttons is visible.
 │   ├── `sidebar.lua`
 │   │   ↳ Builds the sidebar menu using AddMenuButton.
 │   │   ↳ Connects sidebar buttons to pages.lua page switching.
