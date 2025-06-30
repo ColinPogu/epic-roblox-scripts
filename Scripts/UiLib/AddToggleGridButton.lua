@@ -8,23 +8,22 @@ local function createController()
             if obj then
                 if typeof(obj) == "Instance" and obj.Destroy then
                     obj:Destroy()
-            elseif type(obj) == "table" then
-                if obj.Disable then
-                    obj:Disable()
-                elseif obj.Toggle then
-                    obj:Toggle(false)
-                elseif obj.Destroy then
-                    obj:Destroy()
+                elseif type(obj) == "table" then
+                    if obj.Disable then
+                        obj:Disable()
+                    elseif obj.Toggle then
+                        obj:Toggle(false)
+                    elseif obj.Destroy then
+                        obj:Destroy()
+                    end
+                elseif type(obj) == "function" then
+                    -- if function used as cleanup callback
+                    pcall(obj)
                 end
-            elseif type(obj) == "function" then
-                -- if function used as cleanup callback
-                pcall(obj)
             end
+            entry.enabled = false
+            entry.handle = nil
         end
-    end
-        end
-        entry.enabled = false
-        entry.handle = nil
     end
 
     local ToggleLib = {}
