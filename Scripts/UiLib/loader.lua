@@ -22,8 +22,8 @@ return function()
     -- Utility for cloning sidebar buttons
     local addMenuButton = loadRemote("Scripts/UiLib/AddMenuButton.lua")
 
-    -- Set up pages container and default pages
-    local pagesModule = loadRemote("Scripts/UiLib/pages.lua", ui.Background, ui.GridTemplate)
+    -- Set up pages container and default pages using the GridScrolling frame
+    local pagesModule = loadRemote("Scripts/UiLib/pages.lua", ui.GridScrolling, ui.GridTemplate)
     print("[loader] pages module loaded")
 
     -- Build the sidebar and connect buttons to page switching
