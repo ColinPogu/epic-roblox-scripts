@@ -22,6 +22,7 @@ return function(pagesModule, toggleLib, loadRemote)
     add("General", "Simple ESP", "Scripts/General Tools/SimpleESP.lua")
     add("General", "Noclip", "Scripts/General Tools/Noclip.lua")
     add("General", "Flight", "Scripts/General Tools/Flight.lua")
+    add("General", "Speed", "Scripts/General Tools/Speed.lua")
     add("StealGames", "Steal a Baddie", "Scripts/Steal a Baddie Project/combined_auto_tp_stealer.lua")
 
     do
