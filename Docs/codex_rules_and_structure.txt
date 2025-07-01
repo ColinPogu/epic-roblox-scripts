@@ -41,6 +41,9 @@ codex_rules_and_structure.txt – this file
 │   ├── `Flight.lua`
 │   │   ↳ BodyVelocity-based flight with WASD controls and toggle support.
 │   │   ↳ Uses RenderStep loop similar to provided fly script.
+│   ├── `Speed.lua`
+│   │   ↳ Simple toggle to increase WalkSpeed to 50 studs/s.
+│   │   ↳ Restores original speed when disabled.
 
 ├── 📁 Research Tools
 │   └── `Character Info Watcher.lua`
