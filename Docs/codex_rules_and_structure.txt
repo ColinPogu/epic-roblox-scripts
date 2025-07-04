@@ -44,6 +44,10 @@ codex_rules_and_structure.txt – this file
 │   ├── `Speed.lua`
 │   │   ↳ Simple toggle to increase WalkSpeed to 50 studs/s.
 │   │   ↳ Restores original speed when disabled.
+│   ├── `TeleportUI.lua`
+│   │   ↳ UI for storing coordinates and teleporting the player.
+│   │   ↳ Provides buttons to save current position, input custom coords,
+│   │     and teleport to the stored location.
 
 ├── 📁 Research Tools
 │   └── `Character Info Watcher.lua`
